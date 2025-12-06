@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
--- File: data/prototypes/recipes/ore-processing/tier-1-sorting.lua
--- Purpose: Defines sorting recipes that convert crushed ore into chunks.
+-- File: prototypes/recipes/ore-processing/sorting.lua
+-- Purpose: Tier-1 sorting recipes: crushed ore -> chunks (+ stone byproduct).
 --------------------------------------------------------------------------------
 
 data:extend({

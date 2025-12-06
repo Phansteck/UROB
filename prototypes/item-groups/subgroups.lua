@@ -1,8 +1,6 @@
 --------------------------------------------------------------------------------
--- File: data/prototypes/shared/subgroups.lua
--- Purpose: Defines permanent item subgroups for each UR0B refining tier.
---          These determine where items appear in the crafting interface.
--- Important: The order keys keep everything in a logical tier order.
+-- File: prototypes/item-groups/subgroups.lua
+-- Purpose: Defines item subgroups for each UR0B refining tier.
 --------------------------------------------------------------------------------
 
 data:extend({

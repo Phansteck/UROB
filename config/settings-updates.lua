@@ -1,0 +1,4 @@
+--------------------------------------------------------------------------------
+-- File: config/settings-updates.lua
+-- Purpose: Adjusts settings when mods are added/removed (placeholder).
+--------------------------------------------------------------------------------

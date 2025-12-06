@@ -1,29 +1,24 @@
 --------------------------------------------------------------------------------
--- File: data/prototypes/entities/ore-processing/crushers/crusher-mk1.lua
--- Purpose: Placeholder entity definition for the UR0B Crusher Mk1.
---          This machine performs Tier-0 crushing recipes.
--- Notes: Reuses Assembling Machine 1 as a temporary model until an Angels
---        crusher sprite is assigned.
+-- File: prototypes/entities/ore-crusher/crusher-mk1.lua
+-- Purpose: Placeholder entity for UR0B Crusher Mk1.
+-- Notes: Uses Assembling Machine 1 graphics for now.
 --------------------------------------------------------------------------------
 
 local crusher = table.deepcopy(data.raw["assembling-machine"]["assembling-machine-1"])
 
--- Basic entity identity
 crusher.name = "urob-crusher-mk1"
 crusher.icon = "__base__/graphics/icons/assembling-machine-1.png"
 crusher.icon_size = 64
 
--- Placement and mining
 crusher.minable.result = "urob-crusher-mk1"
 
--- UR0B processing
-crusher.crafting_categories = {"urob-crushing"} -- Only performs crushing tier
+crusher.crafting_categories = {"urob-crushing"}
 crusher.crafting_speed = 0.5
 
 data:extend({crusher})
 
 --------------------------------------------------------------------------------
--- Item definition for placing the crusher
+-- Item to place the crusher
 --------------------------------------------------------------------------------
 
 data:extend({

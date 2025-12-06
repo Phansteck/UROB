@@ -3,9 +3,6 @@
 -- Purpose:
 --   - Disable vanilla ore-smelting recipes (iron/copper plates).
 --   - Remove stone resource patches from map generation entirely.
--- Notes:
---   This helps enforce Bureau-controlled refining workflows and eliminates
---   early-game bypasses.
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -30,7 +27,7 @@ end
 -- Removes stone from world generation; stone must now come from UR0B processes.
 --------------------------------------------------------------------------------
 
-local stone = data.raw.resource["stone"]
+local stone = data.raw.resource and data.raw.resource["stone"]
 if stone and stone.autoplace then
   stone.autoplace = nil
 end

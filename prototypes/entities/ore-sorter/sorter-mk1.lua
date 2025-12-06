@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
--- File: data/prototypes/entities/ore-processing/sorters/sorter-mk1.lua
--- Purpose: Placeholder machine for performing Tier-1 sorting.
+-- File: prototypes/entities/ore-sorter/sorter-mk1.lua
+-- Purpose: Placeholder entity for UR0B Sorter Mk1.
+-- Notes: Uses Assembling Machine 1 graphics for now.
 --------------------------------------------------------------------------------
 
 local sorter = table.deepcopy(data.raw["assembling-machine"]["assembling-machine-1"])
@@ -14,10 +15,10 @@ sorter.minable.result = "urob-sorter-mk1"
 sorter.crafting_categories = {"urob-sorting"}
 sorter.crafting_speed = 0.75
 
-data:extend({ sorter })
+data:extend({sorter})
 
 --------------------------------------------------------------------------------
--- Item that places the sorter
+-- Item to place the sorter
 --------------------------------------------------------------------------------
 
 data:extend({
