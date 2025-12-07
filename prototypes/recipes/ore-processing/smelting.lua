@@ -1,8 +1,5 @@
 --------------------------------------------------------------------------------
 -- File: prototypes/recipes/ore-processing/smelting.lua
--- Purpose: Placeholder for Tier-2+ ore-processing step: smelting.
+-- Purpose: Placeholder for UR0B higher-tier processing.
+-- Notes: This file intentionally contains no prototypes.
 --------------------------------------------------------------------------------
-
--- TODO: Define smelting recipes when designing higher tiers.
-data:extend({
-})

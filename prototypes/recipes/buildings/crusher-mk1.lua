@@ -14,6 +14,8 @@ data:extend({
       {"basic-circuit-board", 3},
       {"stone-brick", 10}
     },
-    result = "urob-crusher-mk1"
+    results = {
+      {type = "item", name = "urob-crusher-mk1", amount = 1}
+    }
   }
 })

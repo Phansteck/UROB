@@ -1,8 +1,5 @@
 --------------------------------------------------------------------------------
 -- File: prototypes/recipes/ore-processing/refining.lua
--- Purpose: Placeholder for Tier-2+ ore-processing step: refining.
+-- Purpose: Placeholder for UR0B higher-tier processing.
+-- Notes: This file intentionally contains no prototypes.
 --------------------------------------------------------------------------------
-
--- TODO: Define refining recipes when designing higher tiers.
-data:extend({
-})

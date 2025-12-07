@@ -14,6 +14,8 @@ data:extend({
       {"basic-circuit-board", 5},
       {"steel-plate", 2}
     },
-    result = "urob-sorter-mk1"
+    results = {
+      {type = "item", name = "urob-sorter-mk1", amount = 1}
+    }
   }
 })
