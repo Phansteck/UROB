@@ -1,5 +1,0 @@
---------------------------------------------------------------------------------
--- File: control.lua
--- Purpose: Runtime script entry point for UR0B.
--- Notes: Currently empty; UR0B is prototype-driven at this stage.
---------------------------------------------------------------------------------

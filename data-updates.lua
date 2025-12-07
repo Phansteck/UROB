@@ -1,4 +1,0 @@
---------------------------------------------------------------------------------
--- File: data-updates.lua
--- Purpose: Reserved for future prototype adjustments after other mods load.
---------------------------------------------------------------------------------

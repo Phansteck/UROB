@@ -1,4 +1,0 @@
---------------------------------------------------------------------------------
--- File: config/settings-final-fixes.lua
--- Purpose: Final settings tweaks after all mods are processed (placeholder).
---------------------------------------------------------------------------------

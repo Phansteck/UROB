@@ -1,11 +1,9 @@
 {
-  "name": "urob",
-  "title": "Unified Refining Oversight Bureau",
+  "name": "UR0B",
   "version": "0.0.1",
-  "factorio_version": "2.0",
+  "title": "Unified Refining Oversight Bureau",
   "author": "Phansteck",
-  "dependencies": [
-    "base >= 2.0"
-  ],
-  "description": "The Unified Refining Oversight Bureau (UR0B) establishes a strict, multi-tiered refining directive across all planets. This mod introduces bureau-standardized ore processing, structured refining chains, and regulated smelting pathways following an Angel-style progression philosophy."
+  "description": "A clean foundation for a custom refining overhaul mod.",
+  "factorio_version": "2.0",
+  "dependencies": []
 }

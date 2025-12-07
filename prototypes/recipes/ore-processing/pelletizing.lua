@@ -1,5 +1,0 @@
---------------------------------------------------------------------------------
--- File: prototypes/recipes/ore-processing/pelletizing.lua
--- Purpose: Placeholder for UR0B higher-tier processing.
--- Notes: This file intentionally contains no prototypes.
---------------------------------------------------------------------------------
