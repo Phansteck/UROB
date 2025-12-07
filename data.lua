@@ -1,4 +1,11 @@
+--------------------------------------------------------------------------------
 -- UR0B: Unified Refining Oversight Bureau
--- Clean-slate data stage. No prototypes are defined yet.
+-- Data stage
+-- This file loads all prototype modules for the mod.
+--------------------------------------------------------------------------------
 
--- (Content will be added step-by-step as development progresses.)
+-- Load shared color definitions (similar to Realistic Ores "commons.lua")
+require("prototypes.commons")
+
+-- Load item prototypes
+require("prototypes.items.crushed-ores")
