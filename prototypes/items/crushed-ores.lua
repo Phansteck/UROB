@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- File: prototypes/items/crushed-ores.lua
 -- Purpose: Crushed ore item definitions for UR0B.
--- These use a single base icon with ore-specific tints defined in commons.lua.
+-- Using 32x32 base icon with ore-specific tints from commons.lua.
 --------------------------------------------------------------------------------
 
 data:extend({
@@ -14,7 +14,7 @@ data:extend({
     name = "urob-crushed-iron",
     icons = {{
       icon = "__UR0B__/graphics/icons/crushed-ore.png",
-      tint = urob_colors.iron   -- Realistic Ores tint
+      tint = urob_colors.iron
     }},
     icon_size = 32,
     stack_size = 200
@@ -28,13 +28,13 @@ data:extend({
     name = "urob-crushed-copper",
     icons = {{
       icon = "__UR0B__/graphics/icons/crushed-ore.png",
-      tint = urob_colors.copper  -- Realistic Ores tint
+      tint = urob_colors.copper
     }},
     icon_size = 32,
     stack_size = 200
   }
 
-  -- Add more crushed ores here when needed:
+  -- Add more crushed ores as needed:
   -- {
   --   type = "item",
   --   name = "urob-crushed-tin",
