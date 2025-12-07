@@ -1,11 +1,29 @@
 --------------------------------------------------------------------------------
 -- UR0B: Unified Refining Oversight Bureau
--- Data stage
--- This file loads all prototype modules for the mod.
+-- Data stage loader
+-- Loads core utilities and all prototype definitions.
 --------------------------------------------------------------------------------
 
--- Load shared color definitions (similar to Realistic Ores "commons.lua")
+-- Core functions (must load first — used by many files later)
+require("prototypes.urob-core.functions")
+
+-- Shared color definitions (for ore tints, machine tints, etc.)
 require("prototypes.commons")
 
--- Load item prototypes
+-- Items
 require("prototypes.items.crushed-ores")
+
+-- Buildings (future: crusher, sorting facility, refinery, smelter, etc.)
+-- require("prototypes.buildings.crusher")
+-- require("prototypes.buildings.sorting-facility")
+-- require("prototypes.buildings.refinery")
+
+-- Recipes (crushing, sorting, refining, smelting, etc.)
+-- require("prototypes.recipes.crushing")
+-- require("prototypes.recipes.sorting")
+-- require("prototypes.recipes.refining")
+
+-- Technologies (future)
+-- require("prototypes.technology.crushing")
+-- require("prototypes.technology.refining")
+
