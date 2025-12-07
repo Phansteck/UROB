@@ -1,309 +1,443 @@
---------------------------------------------------------------------------------
 -- File: prototypes/buildings/ore-crusher.lua
--- Mod: UR0B (Unified Refining Oversight Bureau)
--- Purpose:
---   Defines the full family of ore crushers:
---     • burner-ore-crusher  (Tier 0 - burner)
---     • ore-crusher         (Tier 1 - electric)
---     • ore-crusher-2       (Tier 2 - electric)
---     • ore-crusher-3       (Tier 3 - electric)
--- Notes:
---   - Uses UR0B-Core functions (urob.functions.*) for icon layering.
---   - All machines use the "urob-crushing" recipe category.
---   - Graphics paths assume UR0B provides copies of Angels-style sprites.
---------------------------------------------------------------------------------
+-- UR0B: Angels-style Ore Crushers (burner + mk1–mk3), Factorio 2.0-ready
 
-local F = urob.functions
+local f = urob.functions
 
---------------------------------------------------------------------------------
--- ICON HELPERS -----------------------------------------------------------------
---------------------------------------------------------------------------------
-
--- Base icon for all ore crushers (change path if you split icons later).
-local function base_crusher_icon()
-  return {
-    {
-      icon = "__UR0B__/graphics/icons/ore-crusher.png",
-      icon_size = 64,
-    }
-  }
-end
-
--- Builds the final icon for a given tier.
--- tier:
---   nil / "burner" => no number overlay (burner machine)
---   1 / 2 / 3      => numeric tier overlay using UR0B-Core.
-local function crusher_icon_for_tier(tier)
-  local icon = base_crusher_icon()
-
-  if tier == nil or tier == "burner" then
-    -- Burner crusher: plain icon, no number overlay.
-    return icon
-  end
-
-  -- Electric tiers: use number overlay (1, 2, 3).
-  -- You can change the tints here later if you want a machine color scheme.
-  local number_tint  = {r = 1, g = 1, b = 1, a = 1} -- white number
-  local outline_tint = {r = 0, g = 0, b = 0, a = 1} -- black outline
-
-  return F.add_number_icon_layer(icon, tier, number_tint, outline_tint)
-end
-
---------------------------------------------------------------------------------
--- COMMON ENTITY TEMPLATE ------------------------------------------------------
---------------------------------------------------------------------------------
-
--- Returns a base table for an ore crusher assembling-machine.
--- This is cloned and then tier-specific fields are overridden.
-local function make_crusher_entity(name, tier)
-  -- Decide stats per tier.
-  local crafting_speed
-  local energy_usage
-  local module_slots
-
-  if name == "burner-ore-crusher" then
-    crafting_speed = 0.5
-    energy_usage   = "90kW"
-    module_slots   = 0 -- burner stage: no modules
-  elseif name == "ore-crusher" then
-    crafting_speed = 0.75
-    energy_usage   = "100kW"
-    module_slots   = 2
-  elseif name == "ore-crusher-2" then
-    crafting_speed = 1.25
-    energy_usage   = "200kW"
-    module_slots   = 3
-  elseif name == "ore-crusher-3" then
-    crafting_speed = 2.0
-    energy_usage   = "400kW"
-    module_slots   = 4
-  else
-    -- Fallback defaults (shouldn’t happen if we cover all names above).
-    crafting_speed = 1.0
-    energy_usage   = "150kW"
-    module_slots   = 2
-  end
-
-  local entity = {
+data:extend({
+  -- Burner Ore Crusher
+  {
+    type = "item",
+    name = "burner-ore-crusher",
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 0, urob.refining.number_tint),
+    subgroup = "urob-buildings-crushers",
+    order = "a[burner-ore-crusher]",
+    place_result = "burner-ore-crusher",
+    stack_size = 10,
+  },
+  {
     type = "assembling-machine",
-    name = name,
-    icons = crusher_icon_for_tier(tier),
-    icon_size = 64,
-
-    flags = {"placeable-neutral", "placeable-player", "player-creation"},
-    minable = {mining_time = 0.3, result = name},
-    max_health = 200,
-
-    corpse = "medium-remnants",
+    name = "burner-ore-crusher",
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 0, urob.refining.number_tint),
+    flags = { "placeable-neutral", "player-creation" },
+    minable = { mining_time = 0.5, result = "burner-ore-crusher" },
+    fast_replaceable_group = "ore-crusher",
+    next_upgrade = "ore-crusher",
+    max_health = 300,
+    corpse = "big-remnants",
     dying_explosion = "medium-explosion",
+    collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
+    selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
 
-    collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
-    selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+    crafting_categories = { "urob-crushing" },
+    crafting_speed = 1,
+    ingredient_count = 2,
 
-    crafting_categories = {"urob-crushing"},
-    crafting_speed = crafting_speed,
-
-    -- Energy source is filled per tier (burner vs electric) below.
-    energy_source = nil,
-    energy_usage = energy_usage,
-    emissions_per_minute = 2,
-
-    module_specification = {
-      module_slots = module_slots
+    energy_source = {
+      type = "burner",
+      effectivity = 1,
+      fuel_inventory_size = 1,
+      emissions_per_minute = 0.07 * 60,
+      smoke = {
+        {
+          name = "smoke",
+          deviation = { 0.1, 0.1 },
+          frequency = 5,
+          position = util.by_pixel_hr(48, -108),
+          starting_vertical_speed = 0.08,
+          starting_frame_deviation = 60,
+        },
+      },
     },
-    allowed_effects = {"speed", "productivity", "consumption", "pollution"},
+    energy_usage = "100kW",
 
     animation = {
       layers = {
         {
-          filename = "__UR0B__/graphics/entity/ore-crusher/ore-crusher-base.png",
-          width = 128,
-          height = 128,
-          frame_count = 32,
-          line_length = 8,
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-base.png",
+          priority = "extra-high",
+          width = 94,
+          height = 108,
+          frame_count = 16,
+          line_length = 4,
+          shift = util.by_pixel(0, -5),
           animation_speed = 0.5,
-          shift = {0, 0}
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-base.png",
+            priority = "extra-high",
+            width = 189,
+            height = 214,
+            frame_count = 16,
+            line_length = 4,
+            shift = util.by_pixel(-0.5, -5),
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
         },
         {
-          filename = "__UR0B__/graphics/entity/ore-crusher/ore-crusher-shadow.png",
-          width = 160,
-          height = 128,
-          frame_count = 32,
-          line_length = 8,
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-shadow.png",
+          priority = "extra-high",
+          width = 141,
+          height = 72,
+          repeat_count = 16,
+          shift = util.by_pixel(25, 17),
           draw_as_shadow = true,
           animation_speed = 0.5,
-          shift = {0.5, 0.2}
-        }
-      }
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-shadow.png",
+            priority = "extra-high",
+            width = 282,
+            height = 140,
+            repeat_count = 16,
+            shift = util.by_pixel(24, 17.5),
+            draw_as_shadow = true,
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+      },
     },
 
+    vehicle_impact_sound = { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
     working_sound = {
-      sound = {filename = "__base__/sound/stone-crusher.ogg", volume = 0.75},
-      idle_sound = {filename = "__base__/sound/idle1.ogg", volume = 0.5},
-      apparent_volume = 1.5
-    }
-  }
-
-  -- Tier-specific energy source:
-  if name == "burner-ore-crusher" then
-    entity.energy_source = {
-      type = "burner",
-      fuel_category = "chemical",
-      effectivity = 1,
-      fuel_inventory_size = 1,
-      emissions_per_minute = 4,
-      smoke = {
-        {
-          name = "smoke",
-          frequency = 10,
-          position = {0.0, -1.2},
-          deviation = {0.1, 0.1},
-          starting_frame = 0,
-          starting_frame_deviation = 60
-        }
-      }
-    }
-  else
-    entity.energy_source = {
-      type = "electric",
-      usage_priority = "secondary-input"
-    }
-  end
-
-  return entity
-end
-
---------------------------------------------------------------------------------
--- ITEM DEFINITIONS ------------------------------------------------------------
---------------------------------------------------------------------------------
-
-local items = {
-  {
-    -- Tier 0: Burner Crusher
-    type = "item",
-    name = "burner-ore-crusher",
-    icons = crusher_icon_for_tier("burner"),
-    icon_size = 64,
-    subgroup = "urob-buildings",
-    order = "a[ore-crusher]-a[burner]",
-    place_result = "burner-ore-crusher",
-    stack_size = 20
+      sound = { filename = "__urob__/sound/ore-crusher.ogg", volume = 0.6 },
+      idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
+      audible_distance_modifier = 0.5,
+      apparent_volume = 1.25,
+    },
   },
+
+  -- Ore Crusher Mk1
   {
-    -- Tier 1: Ore Crusher
     type = "item",
     name = "ore-crusher",
-    icons = crusher_icon_for_tier(1),
-    icon_size = 64,
-    subgroup = "urob-buildings",
-    order = "a[ore-crusher]-b[ore-crusher]",
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 1, urob.refining.number_tint),
+    subgroup = "urob-buildings-crushers",
+    order = "b[ore-crusher]",
     place_result = "ore-crusher",
-    stack_size = 20
+    stack_size = 10,
   },
   {
-    -- Tier 2: Ore Crusher 2
-    type = "item",
-    name = "ore-crusher-2",
-    icons = crusher_icon_for_tier(2),
-    icon_size = 64,
-    subgroup = "urob-buildings",
-    order = "a[ore-crusher]-c[ore-crusher-2]",
-    place_result = "ore-crusher-2",
-    stack_size = 20
-  },
-  {
-    -- Tier 3: Ore Crusher 3
-    type = "item",
-    name = "ore-crusher-3",
-    icons = crusher_icon_for_tier(3),
-    icon_size = 64,
-    subgroup = "urob-buildings",
-    order = "a[ore-crusher]-d[ore-crusher-3]",
-    place_result = "ore-crusher-3",
-    stack_size = 20
-  }
-}
-
---------------------------------------------------------------------------------
--- RECIPE DEFINITIONS ----------------------------------------------------------
---------------------------------------------------------------------------------
--- NOTE:
---   These are placeholder recipes. Once UR0B's component / smelting system
---   is defined, you can replace the ingredients with more thematic parts.
-
-local recipes = {
-  {
-    -- Burner Crusher (Tier 0) - very cheap, no circuits
-    type = "recipe",
-    name = "burner-ore-crusher",
-    enabled = true, -- may be gated behind "basic crushing" tech later
-    ingredients = {
-      {type = "item", name = "stone",      amount = 10},
-      {type = "item", name = "iron-gear-wheel", amount = 5}
-    },
-    results = {
-      {type = "item", name = "burner-ore-crusher", amount = 1}
-    }
-  },
-  {
-    -- Ore Crusher (Tier 1)
-    type = "recipe",
+    type = "assembling-machine",
     name = "ore-crusher",
-    enabled = false, -- unlock via tech later
-    ingredients = {
-      {type = "item", name = "burner-ore-crusher", amount = 1},
-      {type = "item", name = "iron-plate",         amount = 5},
-      {type = "item", name = "electronic-circuit", amount = 3}
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 1, urob.refining.number_tint),
+    flags = { "placeable-neutral", "player-creation" },
+    minable = { mining_time = 1, result = "ore-crusher" },
+    fast_replaceable_group = "ore-crusher",
+    next_upgrade = "ore-crusher-2",
+    max_health = 300,
+    corpse = "big-remnants",
+    dying_explosion = "medium-explosion",
+    collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
+    selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
+
+    module_specification = {
+      module_slots = 1,
     },
-    results = {
-      {type = "item", name = "ore-crusher", amount = 1}
-    }
+    allowed_effects = { "consumption", "speed", "pollution", "productivity" },
+
+    crafting_categories = { "urob-crushing" },
+    crafting_speed = 1.5,
+
+    energy_source = {
+      type = "electric",
+      usage_priority = "secondary-input", -- still valid in 2.0
+      emissions_per_minute = 0.03 * 60,
+    },
+    energy_usage = "100kW",
+    ingredient_count = 3,
+
+    animation = {
+      layers = {
+        {
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-base.png",
+          priority = "extra-high",
+          width = 94,
+          height = 108,
+          frame_count = 16,
+          line_length = 4,
+          shift = util.by_pixel(0, -5),
+          animation_speed = 0.5,
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-base.png",
+            priority = "extra-high",
+            width = 189,
+            height = 214,
+            frame_count = 16,
+            line_length = 4,
+            shift = util.by_pixel(-0.5, -5),
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+        {
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-shadow.png",
+          priority = "extra-high",
+          width = 141,
+          height = 72,
+          repeat_count = 16,
+          shift = util.by_pixel(25, 17),
+          draw_as_shadow = true,
+          animation_speed = 0.5,
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-shadow.png",
+            priority = "extra-high",
+            width = 282,
+            height = 140,
+            repeat_count = 16,
+            shift = util.by_pixel(24, 17.5),
+            draw_as_shadow = true,
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+      },
+    },
+
+    vehicle_impact_sound = { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
+    working_sound = {
+      sound = { filename = "__urob__/sound/ore-crusher.ogg", volume = 0.6 },
+      idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
+      audible_distance_modifier = 0.5,
+      apparent_volume = 1.25,
+    },
   },
+
+  -- Ore Crusher Mk2
   {
-    -- Ore Crusher 2 (Tier 2)
-    type = "recipe",
+    type = "item",
     name = "ore-crusher-2",
-    enabled = false,
-    ingredients = {
-      {type = "item", name = "ore-crusher",        amount = 1},
-      {type = "item", name = "steel-plate",        amount = 10},
-      {type = "item", name = "advanced-circuit",   amount = 5}
-    },
-    results = {
-      {type = "item", name = "ore-crusher-2", amount = 1}
-    }
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 2, urob.refining.number_tint),
+    subgroup = "urob-buildings-crushers",
+    order = "c[ore-crusher-2]",
+    place_result = "ore-crusher-2",
+    stack_size = 10,
   },
   {
-    -- Ore Crusher 3 (Tier 3)
-    type = "recipe",
-    name = "ore-crusher-3",
-    enabled = false,
-    ingredients = {
-      {type = "item", name = "ore-crusher-2",      amount = 1},
-      {type = "item", name = "steel-plate",        amount = 20},
-      {type = "item", name = "processing-unit",    amount = 5}
+    type = "assembling-machine",
+    name = "ore-crusher-2",
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 2, urob.refining.number_tint),
+    flags = { "placeable-neutral", "player-creation" },
+    minable = { mining_time = 1, result = "ore-crusher-2" },
+    fast_replaceable_group = "ore-crusher",
+    next_upgrade = "ore-crusher-3",
+    max_health = 300,
+    corpse = "big-remnants",
+    dying_explosion = "medium-explosion",
+    collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
+    selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
+
+    module_specification = {
+      module_slots = 2,
     },
-    results = {
-      {type = "item", name = "ore-crusher-3", amount = 1}
-    }
-  }
-}
+    allowed_effects = { "consumption", "speed", "pollution", "productivity" },
 
---------------------------------------------------------------------------------
--- ENTITY DEFINITIONS ----------------------------------------------------------
---------------------------------------------------------------------------------
+    crafting_categories = { "urob-crushing" },
+    crafting_speed = 2,
 
-local entities = {
-  make_crusher_entity("burner-ore-crusher", "burner"),
-  make_crusher_entity("ore-crusher", 1),
-  make_crusher_entity("ore-crusher-2", 2),
-  make_crusher_entity("ore-crusher-3", 3)
-}
+    energy_source = {
+      type = "electric",
+      usage_priority = "secondary-input",
+      emissions_per_minute = 0.04 * 60,
+    },
+    energy_usage = "125kW",
+    ingredient_count = 3,
 
---------------------------------------------------------------------------------
--- REGISTER WITH FACTORIO ------------------------------------------------------
---------------------------------------------------------------------------------
+    animation = {
+      layers = {
+        {
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-base.png",
+          priority = "extra-high",
+          width = 94,
+          height = 108,
+          frame_count = 16,
+          line_length = 4,
+          shift = util.by_pixel(0, -5),
+          animation_speed = 0.5,
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-base.png",
+            priority = "extra-high",
+            width = 189,
+            height = 214,
+            frame_count = 16,
+            line_length = 4,
+            shift = util.by_pixel(-0.5, -5),
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+        {
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-shadow.png",
+          priority = "extra-high",
+          width = 141,
+          height = 72,
+          repeat_count = 16,
+          shift = util.by_pixel(25, 17),
+          draw_as_shadow = true,
+          animation_speed = 0.5,
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-shadow.png",
+            priority = "extra-high",
+            width = 282,
+            height = 140,
+            repeat_count = 16,
+            shift = util.by_pixel(24, 17.5),
+            draw_as_shadow = true,
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+      },
+    },
 
-data:extend(items)
-data:extend(recipes)
-data:extend(entities)
+    vehicle_impact_sound = { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
+    working_sound = {
+      sound = { filename = "__urob__/sound/ore-crusher.ogg", volume = 0.6 },
+      idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
+      audible_distance_modifier = 0.5,
+      apparent_volume = 1.25,
+    },
+  },
+
+  -- Ore Crusher Mk3
+  {
+    type = "item",
+    name = "ore-crusher-3",
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 3, urob.refining.number_tint),
+    subgroup = "urob-buildings-crushers",
+    order = "d[ore-crusher-3]",
+    place_result = "ore-crusher-3",
+    stack_size = 10,
+  },
+  {
+    type = "assembling-machine",
+    name = "ore-crusher-3",
+    icons = f.add_number_icon_layer({
+      {
+        icon = "__urob__/graphics/icons/ore-crusher.png",
+        icon_size = 64,
+        icon_mipmaps = 4,
+      },
+    }, 3, urob.refining.number_tint),
+    flags = { "placeable-neutral", "player-creation" },
+    minable = { mining_time = 1, result = "ore-crusher-3" },
+    fast_replaceable_group = "ore-crusher",
+    max_health = 300,
+    corpse = "big-remnants",
+    dying_explosion = "medium-explosion",
+    collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
+    selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
+
+    module_specification = {
+      module_slots = 3,
+    },
+    allowed_effects = { "consumption", "speed", "pollution", "productivity" },
+
+    crafting_categories = { "urob-crushing" },
+    crafting_speed = 3,
+
+    energy_source = {
+      type = "electric",
+      usage_priority = "secondary-input",
+      emissions_per_minute = 0.05 * 60,
+    },
+    energy_usage = "150kW",
+    ingredient_count = 3,
+
+    animation = {
+      layers = {
+        {
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-base.png",
+          priority = "extra-high",
+          width = 94,
+          height = 108,
+          frame_count = 16,
+          line_length = 4,
+          shift = util.by_pixel(0, -5),
+          animation_speed = 0.5,
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-base.png",
+            priority = "extra-high",
+            width = 189,
+            height = 214,
+            frame_count = 16,
+            line_length = 4,
+            shift = util.by_pixel(-0.5, -5),
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+        {
+          filename = "__urob__/graphics/entity/ore-crusher/ore-crusher-shadow.png",
+          priority = "extra-high",
+          width = 141,
+          height = 72,
+          repeat_count = 16,
+          shift = util.by_pixel(25, 17),
+          draw_as_shadow = true,
+          animation_speed = 0.5,
+          hr_version = urob.trigger.enable_hq_graphics and {
+            filename = "__urob__/graphics/entity/ore-crusher/hr-ore-crusher-shadow.png",
+            priority = "extra-high",
+            width = 282,
+            height = 140,
+            repeat_count = 16,
+            shift = util.by_pixel(24, 17.5),
+            draw_as_shadow = true,
+            animation_speed = 0.5,
+            scale = 0.5,
+          } or nil,
+        },
+      },
+    },
+
+    vehicle_impact_sound = { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
+    working_sound = {
+      sound = { filename = "__urob__/sound/ore-crusher.ogg", volume = 0.6 },
+      idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
+      audible_distance_modifier = 0.5,
+      apparent_volume = 1.25,
+    },
+  },
+})
