@@ -5,4 +5,4 @@
 require("prototypes.overrides.disable-vanilla-smelting")
 
 -- Remove stone patches from map generation and hide them from the map gen GUI.
-require("prototypes.overrides.remove-stone-autoplace")
+require("prototypes.overrides.remove-stone")
