@@ -1,19 +1,27 @@
--- UR0B: Disable stone resource generation and hide it from the map gen GUI.
+-- UR0B: Prevent stone patches from generating and hide them from map gen.
 
 local stone = data.raw.resource["stone"]
 
 if stone then
-  -- Remove all autoplace definitions so the resource can't spawn.
-  stone.autoplace = nil
+  -- Replace autoplace with a zero-probability dummy autoplace.
+  -- This keeps Nauvis planet setup satisfied but prevents any spawning.
+  stone.autoplace = {
+    probability_expression = 0,   -- Stone will never spawn
+  }
 
-  -- Remove from map generation preset UI.
-  if stone.map_generator_settings then
-    stone.map_generator_settings.autoplace = nil
-  end
+  -- Hide stone from the map generation GUI (2.0 uses this).
+  stone.map_generator_settings = {
+    autoplace = {
+      controls = {
+        frequency = "none",
+        size = "none",
+        richness = "none"
+      }
+    },
+    order = "z",  -- doesn't matter, but required structure
+    hidden = true -- hide from UI
+  }
 
-  -- Some mods/placeholders define variant autoplace tables.
-  -- We nuke them just to be thorough.
-  if stone.autoplace_settings then
-    stone.autoplace_settings = nil
-  end
+  -- Ensure no alternative autoplace tables exist.
+  stone.autoplace_settings = nil
 end
