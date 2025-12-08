@@ -1,3 +1,6 @@
+-- File: settings.lua
+-- UR0B startup settings
+
 data:extend({
   {
     type = "bool-setting",
