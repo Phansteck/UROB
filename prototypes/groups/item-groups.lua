@@ -1,6 +1,6 @@
 -- File: prototypes/groups/item-groups.lua
 -- UR0B - Item groups & subgroups
--- Angels-style hierarchical ordering for the entire ore → refining → smelting chain.
+-- Angels-style hierarchical ordering for the ore → refining → smelting chain.
 
 data:extend({
 
@@ -15,13 +15,13 @@ data:extend({
     order_in_recipe = "u-a[urob-refining]",
     icons = {
       {
-        icon = "__UR0B__/graphics/technology/mechanical-refining.png",
+        icon = "__urob__/graphics/technology/mechanical-refining.png",
         icon_size = 256,
         icon_mipmaps = 4,
         scale = 0.25,
       },
       {
-        icon = "__UR0B__/graphics/icons/void.png",
+        icon = "__urob__/graphics/icons/void.png",
         icon_size = 32,
         scale = (64/32) * 0.35,
         shift = { 20, -20 },
@@ -50,7 +50,7 @@ data:extend({
     order = "a[ore-raw]",
   },
 
-  -- Stage 1: Crushing
+  -- Stage 1: Crushing (NEW, used by crushing recipes)
   {
     type = "item-subgroup",
     name = "urob-ore-crushing",
@@ -90,7 +90,7 @@ data:extend({
     order = "e[ore-pure]",
   },
 
-  -- Stage 6: Smelting (NEW subgroup)
+  -- Stage 6: Smelting (NEW, required by urob-smelting-* recipes)
   {
     type = "item-subgroup",
     name = "urob-smelting",
@@ -131,7 +131,7 @@ data:extend({
   },
 
   ------------------------------------------------------------------------------
-  -- BUILDINGS SUBGROUPS
+  -- BUILDING SUBGROUPS
   ------------------------------------------------------------------------------
 
   {
