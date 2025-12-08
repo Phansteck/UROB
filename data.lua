@@ -1,35 +1,41 @@
 -- File: data.lua
 -- UR0B Core Data Loading Order
--- Ensures categories, groups, items, buildings, recipes, and technologies
--- load in the correct sequence (Angels-style structure).
+-- Ensures all prototype files load in the correct dependency sequence.
 
----------
--- 1) Categories (MUST load before machines and recipes)
----------
+----------------------------
+-- 1) Categories
+----------------------------
 require("prototypes.categories.recipe-categories")
 
----------
--- 2) Item groups & subgroups
----------
+----------------------------
+-- 2) Item Groups / Subgroups
+----------------------------
 require("prototypes.groups.item-groups")
 
----------
--- 3) Items
----------
+----------------------------
+-- 3) Item Prototypes
+----------------------------
 require("prototypes.items.crushed-ores")
 
----------
--- 4) Buildings (machines)
----------
+----------------------------
+-- 4) Building Prototypes
+----------------------------
 require("prototypes.buildings.ore-crusher")
 
----------
+----------------------------
 -- 5) Recipes
----------
+----------------------------
 require("prototypes.recipes.crushing")
 require("prototypes.recipes.smelting-crushed")
+require("prototypes.recipes.crushed-stone-processing")  -- NEW FILE
 
----------
--- 6) Technologies
----------
+----------------------------
+-- 6) Technology
+----------------------------
 require("prototypes.technology.crushing-tech")
+
+----------------------------
+-- 7) Overrides & Removals
+----------------------------
+require("prototypes.recipe-overrides.disable-vanilla-smelting")
+require("prototypes.mapgen.remove-stone")
