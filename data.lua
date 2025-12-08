@@ -5,8 +5,8 @@
 ----------------------------
 -- 0) Shared Utilities / Commons
 ----------------------------
-require("commons")                        -- Shared tables, tints, globals
-require("prototypes.urob-core.functions") -- UR0B port of Angels utility functions
+require("commons")                        
+require("prototypes.urob-core.functions") 
 
 ----------------------------
 -- 1) Categories
@@ -35,6 +35,9 @@ require("prototypes.recipes.crushing")
 require("prototypes.recipes.smelting-crushed")
 require("prototypes.recipes.crushed-stone-processing")
 
+-- 🔥 NEW: Crusher crafting recipes (burner, mk1, mk2, mk3)
+require("prototypes.recipes.buildings.ore-crusher-recipes")
+
 ----------------------------
 -- 6) Technology
 ----------------------------
@@ -43,5 +46,5 @@ require("prototypes.technology.crushing-tech")
 ----------------------------
 -- 7) Overrides & Removals
 ----------------------------
-require("prototypes.overrides.disable-vanilla-smelting") -- FIXED PATH
-require("prototypes.overrides.remove-stone")             -- FIXED PATH
+require("prototypes.overrides.disable-vanilla-smelting")
+require("prototypes.overrides.remove-stone")
