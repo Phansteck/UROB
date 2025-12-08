@@ -1,6 +1,6 @@
 -- File: prototypes/groups/item-groups.lua
 -- UR0B - Item groups & subgroups
--- Angels-style hierarchical ordering for ore processing & refining chains.
+-- Angels-style hierarchical ordering for the entire ore → refining → smelting chain.
 
 data:extend({
 
@@ -38,13 +38,11 @@ data:extend({
     icon_size = 64,
   },
 
-
   ------------------------------------------------------------------------------
-  -- REFINING CHAIN SUBGROUPS  (Angels-style progression)
-  -- ore-raw → ore-crushing → ore-crushed → ore-chunk → ore-crystal → ore-pure
+  -- REFINING SUBGROUPS (Angels-style ore chain)
   ------------------------------------------------------------------------------
 
-  -- 0: Raw Ores
+  -- Stage 0: Raw ores
   {
     type = "item-subgroup",
     name = "urob-ore-raw",
@@ -52,7 +50,7 @@ data:extend({
     order = "a[ore-raw]",
   },
 
-  -- 1: Crushing step (NEW subgroup, required by crushing recipes)
+  -- Stage 1: Crushing
   {
     type = "item-subgroup",
     name = "urob-ore-crushing",
@@ -60,7 +58,7 @@ data:extend({
     order = "a-b[ore-crushing]",
   },
 
-  -- 2: Crushed ores
+  -- Stage 2: Crushed ores
   {
     type = "item-subgroup",
     name = "urob-ore-crushed",
@@ -68,7 +66,7 @@ data:extend({
     order = "b[ore-crushed]",
   },
 
-  -- 3: Chunk ores
+  -- Stage 3: Ore chunks
   {
     type = "item-subgroup",
     name = "urob-ore-chunk",
@@ -76,7 +74,7 @@ data:extend({
     order = "c[ore-chunk]",
   },
 
-  -- 4: Crystal ores
+  -- Stage 4: Ore crystals
   {
     type = "item-subgroup",
     name = "urob-ore-crystal",
@@ -84,7 +82,7 @@ data:extend({
     order = "d[ore-crystal]",
   },
 
-  -- 5: Pure ores
+  -- Stage 5: Pure ores
   {
     type = "item-subgroup",
     name = "urob-ore-pure",
@@ -92,7 +90,15 @@ data:extend({
     order = "e[ore-pure]",
   },
 
-  -- 6: Slag processing (mid-chain waste management)
+  -- Stage 6: Smelting (NEW subgroup)
+  {
+    type = "item-subgroup",
+    name = "urob-smelting",
+    group = "urob-refining",
+    order = "e-b[smelting]",
+  },
+
+  -- Stage 7: Slag processing
   {
     type = "item-subgroup",
     name = "urob-slag-processing",
@@ -100,7 +106,7 @@ data:extend({
     order = "f[slag-processing]",
   },
 
-  -- 7: Geode processing (optional higher-tier step)
+  -- Stage 8: Geode processing
   {
     type = "item-subgroup",
     name = "urob-geode-processing",
@@ -108,7 +114,7 @@ data:extend({
     order = "g[geode-processing]",
   },
 
-  -- 8: Water treatment
+  -- Stage 9: Water treatment
   {
     type = "item-subgroup",
     name = "urob-water-treatment",
@@ -116,7 +122,7 @@ data:extend({
     order = "h[water-treatment]",
   },
 
-  -- 9: Intermediates / misc processing materials
+  -- Stage 10: Misc intermediates
   {
     type = "item-subgroup",
     name = "urob-intermediates",
@@ -124,9 +130,8 @@ data:extend({
     order = "z[intermediates]",
   },
 
-
   ------------------------------------------------------------------------------
-  -- BUILDING SUBGROUPS (Machines placed under the “urob-buildings” group)
+  -- BUILDINGS SUBGROUPS
   ------------------------------------------------------------------------------
 
   {
