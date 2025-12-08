@@ -3,6 +3,11 @@
 -- Ensures all prototype files load in the correct dependency sequence.
 
 ----------------------------
+-- 0) Shared Utilities / Commons
+----------------------------
+require("commons")  -- Loads urob_colors and any other shared tables
+
+----------------------------
 -- 1) Categories
 ----------------------------
 require("prototypes.categories.recipe-categories")
