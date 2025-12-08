@@ -1,6 +1,6 @@
 -- File: prototypes/recipes/buildings/ore-crusher-recipes.lua
 -- UR0B: Crafting recipes for all Ore Crusher tiers
--- Fully Factorio 2.0 + Quality mod compliant
+-- Factorio 2.0 + Quality-compatible + Angels-style hiding
 
 data:extend({
 
@@ -10,7 +10,7 @@ data:extend({
   {
     type = "recipe",
     name = "burner-ore-crusher",
-    enabled = true,
+    enabled = true,  -- available from game start
     energy_required = 2,
     ingredients = {
       { type = "item", name = "stone-furnace", amount = 1 },
@@ -19,7 +19,16 @@ data:extend({
     },
     results = {
       { type = "item", name = "burner-ore-crusher", amount = 1 },
-    }
+    },
+
+    -- UI placement
+    subgroup = "urob-buildings-crushers",
+    order = "a[burner-ore-crusher]",
+
+    -- Hide from player crafting (Angels-like)
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    always_show_made_in = true,
   },
 
   ---------------------------------------------------------------------------
@@ -38,7 +47,14 @@ data:extend({
     },
     results = {
       { type = "item", name = "ore-crusher", amount = 1 },
-    }
+    },
+
+    subgroup = "urob-buildings-crushers",
+    order = "b[ore-crusher]",
+
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    always_show_made_in = true,
   },
 
   ---------------------------------------------------------------------------
@@ -57,7 +73,14 @@ data:extend({
     },
     results = {
       { type = "item", name = "ore-crusher-2", amount = 1 },
-    }
+    },
+
+    subgroup = "urob-buildings-crushers",
+    order = "c[ore-crusher-2]",
+
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    always_show_made_in = true,
   },
 
   ---------------------------------------------------------------------------
@@ -76,7 +99,14 @@ data:extend({
     },
     results = {
       { type = "item", name = "ore-crusher-3", amount = 1 },
-    }
+    },
+
+    subgroup = "urob-buildings-crushers",
+    order = "d[ore-crusher-3]",
+
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    always_show_made_in = true,
   },
 
 })
