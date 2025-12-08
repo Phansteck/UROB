@@ -5,7 +5,8 @@
 ----------------------------
 -- 0) Shared Utilities / Commons
 ----------------------------
-require("commons")  -- Loads urob_colors and any other shared tables
+require("commons")                       -- Loads urob_colors and core shared tables
+require("prototypes.urob-core.functions") -- Loads urob.functions + helpers (NEW)
 
 ----------------------------
 -- 1) Categories
@@ -32,7 +33,7 @@ require("prototypes.buildings.ore-crusher")
 ----------------------------
 require("prototypes.recipes.crushing")
 require("prototypes.recipes.smelting-crushed")
-require("prototypes.recipes.crushed-stone-processing")  -- NEW FILE
+require("prototypes.recipes.crushed-stone-processing")
 
 ----------------------------
 -- 6) Technology
@@ -42,5 +43,5 @@ require("prototypes.technology.crushing-tech")
 ----------------------------
 -- 7) Overrides & Removals
 ----------------------------
-require("prototypes.recipe-overrides.disable-vanilla-smelting")
-require("prototypes.mapgen.remove-stone")
+require("prototypes.overrides.disable-vanilla-smelting")
+require("prototypes.overrides.remove-stone")
