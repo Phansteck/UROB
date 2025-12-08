@@ -1,49 +1,46 @@
---------------------------------------------------------------------------------
 -- File: prototypes/items/crushed-ores.lua
 -- Purpose: Crushed ore item definitions for UR0B.
--- Using 32x32 base icon with ore-specific tints from commons.lua.
---------------------------------------------------------------------------------
+-- Uses a neutral greyscale crushed ore icon tinted via urob_colors (commons.lua).
+
+local colors = urob_colors
+
+local base_icon = "__urob__/graphics/icons/crushed-ore.png"
+
+local function crushed(name, tint, order)
+  return {
+    type = "item",
+    name = "urob-crushed-" .. name,
+    icons = {{
+      icon = base_icon,
+      icon_size = 32,
+      tint = tint
+    }},
+    subgroup = "urob-ore-crushed",
+    order = order,
+    stack_size = 200
+  }
+end
 
 data:extend({
 
-  -- ========================================================================
+  ---------------------------------------------------------------------------
   -- Crushed Iron
-  -- ========================================================================
-  {
-    type = "item",
-    name = "urob-crushed-iron",
-    icons = {{
-      icon = "__UR0B__/graphics/icons/crushed-ore.png",
-      tint = urob_colors.iron
-    }},
-    icon_size = 32,
-    stack_size = 200
-  },
+  ---------------------------------------------------------------------------
+  crushed("iron", colors.iron, "a[iron]"),
 
-  -- ========================================================================
+  ---------------------------------------------------------------------------
   -- Crushed Copper
-  -- ========================================================================
-  {
-    type = "item",
-    name = "urob-crushed-copper",
-    icons = {{
-      icon = "__UR0B__/graphics/icons/crushed-ore.png",
-      tint = urob_colors.copper
-    }},
-    icon_size = 32,
-    stack_size = 200
-  }
+  ---------------------------------------------------------------------------
+  crushed("copper", colors.copper, "b[copper]"),
 
-  -- Add more crushed ores as needed:
-  -- {
-  --   type = "item",
-  --   name = "urob-crushed-tin",
-  --   icons = {{
-  --     icon = "__UR0B__/graphics/icons/crushed-ore.png",
-  --     tint = urob_colors.tin
-  --   }},
-  --   icon_size = 32,
-  --   stack_size = 200
-  -- },
+  ---------------------------------------------------------------------------
+  -- Crushed Stone (no tint – stays neutral grey)
+  ---------------------------------------------------------------------------
+  crushed("stone", nil, "c[stone]"),
+
+  ---------------------------------------------------------------------------
+  -- Crushed Uranium
+  ---------------------------------------------------------------------------
+  crushed("uranium", colors.uranium, "d[uranium]"),
 
 })
