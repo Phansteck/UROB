@@ -1,9 +1,23 @@
 {
-  "name": "urob",
-  "version": "0.0.1",
-  "title": "Unified Refining Oversight Bureau",
+  "name": "UR0B",
+  "version": "0.1.0",
+  "title": "UR0B - Craterborn Refining",
   "author": "Phansteck",
-  "description": "A clean foundation for a custom refining overhaul mod.",
+  "contact": "",
+  "homepage": "",
+  "description": "A lightweight Angels-inspired ore refining system designed for Factorio 2.0. Adds crushing, crushed ores, crushed stone processing, electric crushers, and a custom refining progression.",
   "factorio_version": "2.0",
-  "dependencies": []
+
+  "dependencies": [
+    "base >= 2.0.0"
+  ],
+
+  "package": {
+    "scripts": [
+      "control.lua"
+    ],
+    "settings": [
+      "prototypes/settings.lua"
+    ]
+  }
 }
