@@ -1,12 +1,11 @@
 -- File: prototypes/recipes/buildings/ore-crusher-recipes.lua
 -- UR0B: Crafting recipes for all Ore Crusher tiers
--- Factorio 2.0 compliant
+-- Factorio 2.0 + Quality mod compliant
 
 data:extend({
 
   ---------------------------------------------------------------------------
   -- BURNER ORE CRUSHER (Tier 0)
-  -- Always available at game start (enabled = true)
   ---------------------------------------------------------------------------
   {
     type = "recipe",
@@ -18,12 +17,13 @@ data:extend({
       { "iron-plate", 5 },
       { "stone", 10 },
     },
-    result = "burner-ore-crusher",
+    results = {
+      { type = "item", name = "burner-ore-crusher", amount = 1 },
+    }
   },
 
   ---------------------------------------------------------------------------
   -- ORE CRUSHER MK1 (Tier 1)
-  -- Unlocked by technology: urob-ore-crushing
   ---------------------------------------------------------------------------
   {
     type = "recipe",
@@ -36,12 +36,13 @@ data:extend({
       { "iron-gear-wheel", 5 },
       { "electronic-circuit", 2 },
     },
-    result = "ore-crusher",
+    results = {
+      { type = "item", name = "ore-crusher", amount = 1 },
+    }
   },
 
   ---------------------------------------------------------------------------
   -- ORE CRUSHER MK2 (Tier 2)
-  -- Unlocked by technology: urob-ore-crushing-2
   ---------------------------------------------------------------------------
   {
     type = "recipe",
@@ -54,12 +55,13 @@ data:extend({
       { "iron-gear-wheel", 10 },
       { "advanced-circuit", 3 },
     },
-    result = "ore-crusher-2",
+    results = {
+      { type = "item", name = "ore-crusher-2", amount = 1 },
+    }
   },
 
   ---------------------------------------------------------------------------
   -- ORE CRUSHER MK3 (Tier 3)
-  -- Unlocked by technology: urob-ore-crushing-3
   ---------------------------------------------------------------------------
   {
     type = "recipe",
@@ -72,7 +74,9 @@ data:extend({
       { "electric-engine-unit", 5 },
       { "advanced-circuit", 5 },
     },
-    result = "ore-crusher-3",
+    results = {
+      { type = "item", name = "ore-crusher-3", amount = 1 },
+    }
   },
 
 })
