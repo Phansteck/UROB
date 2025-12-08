@@ -5,8 +5,8 @@
 ----------------------------
 -- 0) Shared Utilities / Commons
 ----------------------------
-require("commons")                       -- Loads urob_colors and core shared tables
-require("prototypes.urob-core.functions") -- Loads urob.functions + helpers (NEW)
+require("commons")                        -- Shared tables, tints, globals
+require("prototypes.urob-core.functions") -- UR0B port of Angels utility functions
 
 ----------------------------
 -- 1) Categories
@@ -43,5 +43,5 @@ require("prototypes.technology.crushing-tech")
 ----------------------------
 -- 7) Overrides & Removals
 ----------------------------
-require("prototypes.overrides.disable-vanilla-smelting")
-require("prototypes.overrides.remove-stone")
+require("prototypes.overrides.disable-vanilla-smelting") -- FIXED PATH
+require("prototypes.overrides.remove-stone")             -- FIXED PATH
