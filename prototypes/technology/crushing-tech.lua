@@ -1,27 +1,27 @@
 -- File: prototypes/technology/crushing-tech.lua
--- UR0B Technology Tree (Crushing Tier)
--- Mirrors Angels structure but simplified for vanilla ores and UR0B progression.
--- Burner crusher, crushing recipes, and crushed smelting are unlocked at game start.
+-- UR0B Crushing Technology Tree
+-- Mirrors Angels' "ore-crushing" tier but adapted for vanilla ore refining.
+-- Burner crusher, crushing recipes, and crushed smelting are enabled at start.
 
 data:extend({
 
   -----------------------------------------------------------------------------
-  -- CRUSHING 1 (Electric Crusher MK1)
-  -- Player begins with burner crusher & crushing enabled, so this is first step.
+  -- TIER 1 : ORE CRUSHING (Electric Crusher MK1)
   -----------------------------------------------------------------------------
   {
     type = "technology",
-    name = "urob-crushing-1",
-    icon = "__urob__/graphics/technology/crushing-1.png",
-    icon_size = 128,
+    name = "urob-ore-crushing",
+    icon = "__urob__/graphics/technology/mechanical-refining.png",
+    icon_size = 256,
+    icon_mipmaps = 4,
     order = "a-a",
     prerequisites = { "automation" },
     effects = {
+      -- Burner crusher, crushing recipes, and smelting are available from start.
       {
         type = "unlock-recipe",
-        recipe = "ore-crusher"   -- Electric Crusher MK1
+        recipe = "ore-crusher" -- Electric Crusher MK1
       }
-      -- Crushing recipes + crushed smelting = enabled from start
     },
     unit = {
       count = 40,
@@ -33,15 +33,16 @@ data:extend({
   },
 
   -----------------------------------------------------------------------------
-  -- CRUSHING 2 (Electric Crusher MK2)
+  -- TIER 2 : ORE CRUSHING MK2 (Electric Crusher MK2)
   -----------------------------------------------------------------------------
   {
     type = "technology",
-    name = "urob-crushing-2",
-    icon = "__urob__/graphics/technology/crushing-2.png",
-    icon_size = 128,
+    name = "urob-ore-crushing-2",
+    icon = "__urob__/graphics/technology/mechanical-refining.png", -- same icon
+    icon_size = 256,
+    icon_mipmaps = 4,
     order = "a-b",
-    prerequisites = { "urob-crushing-1", "logistics" },
+    prerequisites = { "urob-ore-crushing", "logistics" },
     effects = {
       {
         type = "unlock-recipe",
@@ -59,15 +60,16 @@ data:extend({
   },
 
   -----------------------------------------------------------------------------
-  -- CRUSHING 3 (Electric Crusher MK3)
+  -- TIER 3 : ORE CRUSHING MK3 (Electric Crusher MK3)
   -----------------------------------------------------------------------------
   {
     type = "technology",
-    name = "urob-crushing-3",
-    icon = "__urob__/graphics/technology/crushing-3.png",
-    icon_size = 128,
+    name = "urob-ore-crushing-3",
+    icon = "__urob__/graphics/technology/mechanical-refining.png", -- same icon
+    icon_size = 256,
+    icon_mipmaps = 4,
     order = "a-c",
-    prerequisites = { "urob-crushing-2" },
+    prerequisites = { "urob-ore-crushing-2" },
     effects = {
       {
         type = "unlock-recipe",
