@@ -1,6 +1,6 @@
 -- File: prototypes/recipes/buildings/ore-crusher-recipes.lua
 -- UR0B: Crafting recipes for all Ore Crusher tiers
--- Factorio 2.0 + Quality mod compliant
+-- Fully Factorio 2.0 + Quality mod compliant
 
 data:extend({
 
@@ -13,9 +13,9 @@ data:extend({
     enabled = true,
     energy_required = 2,
     ingredients = {
-      { "stone-furnace", 1 },
-      { "iron-plate", 5 },
-      { "stone", 10 },
+      { type = "item", name = "stone-furnace", amount = 1 },
+      { type = "item", name = "iron-plate", amount = 5 },
+      { type = "item", name = "stone", amount = 10 },
     },
     results = {
       { type = "item", name = "burner-ore-crusher", amount = 1 },
@@ -31,10 +31,10 @@ data:extend({
     enabled = false,
     energy_required = 3,
     ingredients = {
-      { "burner-ore-crusher", 1 },
-      { "iron-plate", 10 },
-      { "iron-gear-wheel", 5 },
-      { "electronic-circuit", 2 },
+      { type = "item", name = "burner-ore-crusher", amount = 1 },
+      { type = "item", name = "iron-plate", amount = 10 },
+      { type = "item", name = "iron-gear-wheel", amount = 5 },
+      { type = "item", name = "electronic-circuit", amount = 2 },
     },
     results = {
       { type = "item", name = "ore-crusher", amount = 1 },
@@ -50,10 +50,10 @@ data:extend({
     enabled = false,
     energy_required = 4,
     ingredients = {
-      { "ore-crusher", 1 },
-      { "steel-plate", 10 },
-      { "iron-gear-wheel", 10 },
-      { "advanced-circuit", 3 },
+      { type = "item", name = "ore-crusher", amount = 1 },
+      { type = "item", name = "steel-plate", amount = 10 },
+      { type = "item", name = "iron-gear-wheel", amount = 10 },
+      { type = "item", name = "advanced-circuit", amount = 3 },
     },
     results = {
       { type = "item", name = "ore-crusher-2", amount = 1 },
@@ -69,10 +69,10 @@ data:extend({
     enabled = false,
     energy_required = 5,
     ingredients = {
-      { "ore-crusher-2", 1 },
-      { "steel-plate", 15 },
-      { "electric-engine-unit", 5 },
-      { "advanced-circuit", 5 },
+      { type = "item", name = "ore-crusher-2", amount = 1 },
+      { type = "item", name = "steel-plate", amount = 15 },
+      { type = "item", name = "electric-engine-unit", amount = 5 },
+      { type = "item", name = "advanced-circuit", amount = 5 },
     },
     results = {
       { type = "item", name = "ore-crusher-3", amount = 1 },
