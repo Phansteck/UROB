@@ -17,7 +17,7 @@
       "control.lua"
     ],
     "settings": [
-      "prototypes/settings.lua"
+      "settings.lua"
     ]
   }
 }
