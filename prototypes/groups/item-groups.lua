@@ -1,12 +1,9 @@
 -- File: prototypes/groups/item-groups.lua
 -- UR0B - Item groups & subgroups
---
--- This file defines the tabs at the top of the crafting GUI (item-groups)
--- and the rows inside those tabs (item-subgroups) for the UR0B mod.
---
--- Updated: Refining group now uses Angels-style layered icon.
+-- Angels-style hierarchical ordering for ore processing & refining chains.
 
 data:extend({
+
   ------------------------------------------------------------------------------
   -- MAIN ITEM GROUPS
   ------------------------------------------------------------------------------
@@ -16,18 +13,14 @@ data:extend({
     name = "urob-refining",
     order = "u-a[urob-refining]",
     order_in_recipe = "u-a[urob-refining]",
-
-    -- Angels-style ICONS block (multi-layer)
     icons = {
       {
-        -- Main tech-style icon (scaled down, just like Angels)
         icon = "__UR0B__/graphics/technology/mechanical-refining.png",
         icon_size = 256,
         icon_mipmaps = 4,
         scale = 0.25,
       },
       {
-        -- Corner overlay icon (Angels uses void.png)
         icon = "__UR0B__/graphics/icons/void.png",
         icon_size = 32,
         scale = (64/32) * 0.35,
@@ -45,10 +38,13 @@ data:extend({
     icon_size = 64,
   },
 
+
   ------------------------------------------------------------------------------
-  -- REFINING CHAIN SUBGROUPS (materials, inside urob-refining)
+  -- REFINING CHAIN SUBGROUPS  (Angels-style progression)
+  -- ore-raw → ore-crushing → ore-crushed → ore-chunk → ore-crystal → ore-pure
   ------------------------------------------------------------------------------
 
+  -- 0: Raw Ores
   {
     type = "item-subgroup",
     name = "urob-ore-raw",
@@ -56,6 +52,15 @@ data:extend({
     order = "a[ore-raw]",
   },
 
+  -- 1: Crushing step (NEW subgroup, required by crushing recipes)
+  {
+    type = "item-subgroup",
+    name = "urob-ore-crushing",
+    group = "urob-refining",
+    order = "a-b[ore-crushing]",
+  },
+
+  -- 2: Crushed ores
   {
     type = "item-subgroup",
     name = "urob-ore-crushed",
@@ -63,6 +68,7 @@ data:extend({
     order = "b[ore-crushed]",
   },
 
+  -- 3: Chunk ores
   {
     type = "item-subgroup",
     name = "urob-ore-chunk",
@@ -70,6 +76,7 @@ data:extend({
     order = "c[ore-chunk]",
   },
 
+  -- 4: Crystal ores
   {
     type = "item-subgroup",
     name = "urob-ore-crystal",
@@ -77,6 +84,7 @@ data:extend({
     order = "d[ore-crystal]",
   },
 
+  -- 5: Pure ores
   {
     type = "item-subgroup",
     name = "urob-ore-pure",
@@ -84,6 +92,7 @@ data:extend({
     order = "e[ore-pure]",
   },
 
+  -- 6: Slag processing (mid-chain waste management)
   {
     type = "item-subgroup",
     name = "urob-slag-processing",
@@ -91,6 +100,7 @@ data:extend({
     order = "f[slag-processing]",
   },
 
+  -- 7: Geode processing (optional higher-tier step)
   {
     type = "item-subgroup",
     name = "urob-geode-processing",
@@ -98,6 +108,7 @@ data:extend({
     order = "g[geode-processing]",
   },
 
+  -- 8: Water treatment
   {
     type = "item-subgroup",
     name = "urob-water-treatment",
@@ -105,6 +116,7 @@ data:extend({
     order = "h[water-treatment]",
   },
 
+  -- 9: Intermediates / misc processing materials
   {
     type = "item-subgroup",
     name = "urob-intermediates",
@@ -112,8 +124,9 @@ data:extend({
     order = "z[intermediates]",
   },
 
+
   ------------------------------------------------------------------------------
-  -- BUILDINGS SUBGROUPS (machines, inside urob-buildings)
+  -- BUILDING SUBGROUPS (Machines placed under the “urob-buildings” group)
   ------------------------------------------------------------------------------
 
   {
@@ -150,4 +163,5 @@ data:extend({
     group = "urob-buildings",
     order = "z[buildings-misc]",
   },
+
 })
